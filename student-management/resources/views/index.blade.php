@@ -44,23 +44,55 @@
             text-decoration: none;
             color: #007bff;
         }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .success-message {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
     <h2>All Registered Students</h2>
 
+    @if(session('success'))
+        <p class="success-message">{{ session('success') }}</p>
+    @endif
+
     <table>
         <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Department</th>
+            <th>Action</th>
         </tr>
         @foreach($students as $student)
         <tr>
             <td>{{ $student->name }}</td>
             <td>{{ $student->email }}</td>
             <td>{{ $student->department }}</td>
+            <td>
+                <form action="{{ route('student.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </td>
         </tr>
         @endforeach
     </table>

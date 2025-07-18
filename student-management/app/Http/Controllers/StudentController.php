@@ -30,4 +30,12 @@ class StudentController extends Controller
         $students = Student::all();
         return view('index', compact('students'));
     }
+
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->delete();
+
+        return redirect()->route('student.index')->with('success', 'Student deleted successfully!');
+    }
 }
