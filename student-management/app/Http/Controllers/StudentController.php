@@ -24,4 +24,10 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Student added successfully!');
     }
+
+    public function index()
+    {
+        $students = Student::all();
+        return view('index', compact('students'));
+    }
 }

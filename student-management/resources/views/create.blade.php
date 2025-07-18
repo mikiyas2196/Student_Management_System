@@ -97,6 +97,10 @@
             <input type="text" name="department" id="department" required>
 
             <button type="submit">Add Student</button>
+
+            <a href="{{ route('student.index') }}">
+            <button type="button" style="margin-top: 15px; background-color: #28a745;">Display Students</button>
+            </a>
         </form>
     </div>
 
