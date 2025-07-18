@@ -38,9 +38,6 @@
         }
 
         a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
             text-decoration: none;
             color: #007bff;
         }
@@ -58,11 +55,35 @@
             background-color: #c82333;
         }
 
+        .btn-edit {
+            background-color: #ffc107;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
         .success-message {
             text-align: center;
             color: green;
             font-weight: bold;
             margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -87,17 +108,23 @@
             <td>{{ $student->email }}</td>
             <td>{{ $student->department }}</td>
             <td>
-                <form action="{{ route('student.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-delete">Delete</button>
-                </form>
+                <div class="action-buttons">
+                    <a href="{{ route('student.edit', $student->id) }}">
+                        <button type="button" class="btn-edit">Edit</button>
+                    </a>
+
+                    <form action="{{ route('student.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete">Delete</button>
+                    </form>
+                </div>
             </td>
         </tr>
         @endforeach
     </table>
 
-    <a href="{{ url()->previous() }}">⬅ Back</a>
+    <a href="{{ url()->previous() }}" class="back-link">⬅ Back</a>
 
 </body>
 </html>
