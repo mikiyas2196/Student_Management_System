@@ -3,106 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Register Student</title>
-    <style>
-        body {
-            background-color: #f3f4f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            padding: 40px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333333;
-            margin-bottom: 25px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
-            color: #555;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .success {
-            text-align: center;
-            color: green;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-    </style>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light d-flex align-items-center" style="min-height: 100vh;">
 
-    <div class="form-container">
-        <h2>Register a Student</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+                <div class="card shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <h2 class="text-center mb-4">Register a Student</h2>
 
-        @if(session('success'))
-            <p class="success">{{ session('success') }}</p>
-        @endif
+                       @if(session('success'))
+                    <div class="alert alert-success text-center" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                    <script>
+                        setTimeout(function() {
+                            var alert = document.getElementById('success-alert');
+                            if (alert) {
+                                alert.style.display = 'none';
+                            }
+                        }, 3000);
+                    </script>
+                        @endif
+                        <form action="{{ route('student.store') }}" method="POST" autocomplete="off">
+                            @csrf
 
-        <form action="{{ route('student.store') }}" method="POST">
-            @csrf
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
 
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="form-control">
+                            </div>
 
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email">
+                            <div class="mb-3">
+                                <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                <input type="text" name="department" id="department" class="form-control" required>
+                            </div>
 
-            <label for="department">Department</label>
-            <input type="text" name="department" id="department" required>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Add Student</button>
+                            </div>
+                        </form>
 
-            <button type="submit">Add Student</button>
-
-            <a href="{{ route('student.index') }}">
-            <button type="button" style="margin-top: 15px; background-color: #28a745;">Display Students</button>
-            </a>
-        </form>
+                        <div class="d-grid mt-3">
+                            <a href="{{ route('student.index') }}" class="btn btn-success">Display Students</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Bootstrap 5 JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

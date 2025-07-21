@@ -2,80 +2,52 @@
 <html>
 <head>
     <title>Edit Student</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            padding: 40px;
-        }
-
-        .form-container {
-            background-color: #fff;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        input[type="text"],
-        input[type="email"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        .btn-submit {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-submit:hover {
-            background-color: #218838;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007bff;
-        }
-    </style>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light py-5">
 
-    <div class="form-container">
-        <h2>Edit Student</h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">Edit Student</h2>
+                        <form action="{{ route('student.update', $student->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
 
-        <form action="{{ route('student.update', $student->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{ $student->name }}" required>
+                            </div>
 
-            <label for="name">Name:</label>
-            <input type="text" name="name" value="{{ $student->name }}" required>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ $student->email }}" required>
+                            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" value="{{ $student->email }}" required>
+                            <div class="mb-3">
+                                <label for="department" class="form-label fw-bold">Department</label>
+                                <input type="text" class="form-control" name="department" value="{{ $student->department }}" required>
+                            </div>
 
-            <label for="department">Department:</label>
-            <input type="text" name="department" value="{{ $student->department }}" required>
-
-            <button type="submit" class="btn-submit">Update</button>
-        </form>
-
-        <a href="{{ route('student.index') }}">⬅ Back to list</a>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success">Update</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="{{ route('student.index') }}" class="text-decoration-none">
+                                &larr; Back to list
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Bootstrap JS (optional, for some components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

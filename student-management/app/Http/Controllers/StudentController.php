@@ -25,11 +25,21 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Student added successfully!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
-        return view('index', compact('students'));
+        $query = Student::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        }
+
+        $students = $query->get();
+
+        return view('students.index', compact('students'));
     }
+
 
     public function destroy($id)
     {
@@ -64,4 +74,11 @@ class StudentController extends Controller
 
         return redirect()->route('student.index')->with('success', 'Student updated successfully!');
     }
+
+    public function show($id)
+    {
+        $student = Student::findOrFail($id);
+        return view('students.show', compact('student'));
+    }
+
 }
